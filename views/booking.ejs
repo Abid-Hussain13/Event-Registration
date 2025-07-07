@@ -1,0 +1,97 @@
+<%- include("partials/header.ejs") %>
+
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card shadow-lg border-0">
+          <div class="card-body p-4">
+            <h2 class="card-title text-center mb-4" style="font-family: 'Playfair Display', serif;">Book Your <span
+                class="text-warning main-heading">Event</span></h2>
+
+            <form action="/submitBooking" method="POST">
+              <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="<%= formData.name %>" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" value="<%= formData.email %>" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" value="<%= formData.phone %>" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="eventDate" class="form-label">Event Date</label>
+                <input type="date" class="form-control" id="eventDate" name="eventDate"
+                  value="<%= formData.eventDate %>" required>
+                  <% if (bookingErr.length > 0) { %>
+                    <div class="text-danger mt-1" id="errorAlert">
+                        <%= bookingErr[0] %>
+                    </div>
+                <% } %>
+              </div>
+
+              <div class="mb-3">
+                <label for="eventType" class="form-label">Event Type</label>
+                <select class="form-select" id="eventType" name="eventType" required>
+                  <option disabled <%=!formData.eventType ? 'selected' : '' %>>Select an event type</option>
+                  <option value="Wedding" <%=formData.eventType==='Wedding' ? 'selected' : '' %>>Wedding</option>
+                  <option value="Birthday" <%=formData.eventType==='Birthday' ? 'selected' : '' %>>Birthday Party
+                  </option>
+                  <option value="Corporate" <%=formData.eventType==='Corporate' ? 'selected' : '' %>>Corporate Event
+                  </option>
+                  <option value="Concert" <%=formData.eventType==='Concert' ? 'selected' : '' %>>Concert</option>
+                  <option value="Other" <%=formData.eventType==='Other' ? 'selected' : '' %>>Other</option>
+                </select>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="numPersons" class="form-label">Number of Persons</label>
+                <select class="form-select" id="numPersons" name="numPersons" required>
+                  <option disabled <%=!formData.numPersons ? 'selected' : '' %>>Select number of persons</option>
+                  <option value="100" <%=formData.numPersons==='100' ? 'selected' : '' %>>100</option>
+                  <option value="200" <%=formData.numPersons==='200' ? 'selected' : '' %>>200</option>
+                  <option value="450" <%=formData.numPersons==='450' ? 'selected' : '' %>>450</option>
+                  <option value="600" <%=formData.numPersons==='600' ? 'selected' : '' %>>600</option>
+                  <option value="Other" <%=formData.numPersons==='Other' ? 'selected' : '' %>>Other</option>
+                </select>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="decoration" class="form-label">Decoration Type</label>
+                <select class="form-select" id="decoration" name="decoration" required>
+                  <option selected disabled <%= !formData.decoration ? 'selected' : '' %>>Select decoration type</option>
+                  <option value="Standard" <%= formData.decoration == 'Standard' ? 'selected' : '' %>>Standard</option>
+                  <option value="High" <%= formData.decoration == 'High' ? 'selected' : '' %>>High</option>
+                  <option value="Luxury" <%= formData.decoration == 'Luxury' ? 'selected' : ''%>>Luxury</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="message" class="form-label">Additional Details</label>
+                <textarea class="form-control" id="message" name="message" rows="4"
+                  placeholder="Tell us more about your event..." <%=formData.message %>></textarea>
+              </div>
+              <div class="mb-3 d-flex justify-content-center fs-3 fw-bold">
+                <span id="priceDisplay" class="text-success ms-2"></span>
+                <input type="hidden" id="price" name="price" value="">
+              </div>                                        
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Book Now</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include("partials/footer.ejs") %>

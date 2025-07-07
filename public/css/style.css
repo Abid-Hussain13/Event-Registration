@@ -1,0 +1,49 @@
+.main-heading{
+    font-family: cursive;
+}
+.big-deal {
+    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  .img-hover {
+    width: 100%;
+    transition: 0.3s; 
+    border-radius: 10px;
+  }
+  
+  .deal-details {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgba(26, 25, 25, 0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .deal-titles {
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  
+  .img-pop-up:hover .deal-details {
+    display: flex;
+  }
+  
+  .img-hover:hover {
+    opacity: 0.9;
+    transition: 0.6s;
+  }
+  
+.foot{
+    height: 70px;
+}
+
+
