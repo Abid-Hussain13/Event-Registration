@@ -23,7 +23,7 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
 
-dotenv.config()({Path: "./.env"});
+dotenv.config();
 
 const connection = mysql.createConnection({
   host: process.env.MYSQLHOST,
@@ -33,4 +33,5 @@ const connection = mysql.createConnection({
   port: process.env.MYSQLPORT,
 });
 
-module.exports = connection;
+export default connection;
+
