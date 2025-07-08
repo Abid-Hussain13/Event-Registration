@@ -178,7 +178,7 @@ app.post("/submitBooking", (req, res) => {
     }
     
     console.log('Booking successful:', result);
-    res.redirect('/events');
+    res.redirect('/Events');
   });
   
 });
@@ -192,7 +192,7 @@ app.get("/events", isAuthenticated, (req, res) => {
         console.log("Error fetching bookings: ",err);
         return res.status(500).send("Database error");
       }
-      res.render("events", { bookings: results, user: req.session.user, successMessage: [], errorMessage: [] });
+      res.render("Events", { bookings: results, user: req.session.user, successMessage: [], errorMessage: [] });
     })
   }else{
   const query = "SELECT * FROM bookings where userID = ?"; 
@@ -202,7 +202,7 @@ app.get("/events", isAuthenticated, (req, res) => {
           console.error("Error fetching bookings:", err);
           return res.status(500).send("Database error");
       }
-      res.render("events", { bookings: results, user: req.session.user, successMessage: [], errorMessage: [] });
+      res.render("Events", { bookings: results, user: req.session.user, successMessage: [], errorMessage: [] });
   });}
 });
 
@@ -218,7 +218,7 @@ app.post("/deleteEvent/:id",isAuthenticated, (req, res) =>{
       return res.status(500).send("Database error");
     }
     req.flash("success", "Event Delete Successfully");
-    res.redirect('/events');
+    res.redirect('/Events');
   })
 });
 
