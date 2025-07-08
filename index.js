@@ -14,6 +14,8 @@ const port = 3000;
 
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 app.set('view engine', 'ejs'); 
+app.set('views', path.join(__dirname, 'views'));
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
