@@ -1,6 +1,23 @@
 .main-heading{
     font-family: cursive;
 }
+.brand-title {
+  font-size: 2.5rem; /* default size (like fs-1) */
+}
+
+@media (max-width: 768px) {
+  .brand-title {
+    font-size: 1.75rem; /* like fs-3 */
+  }
+}
+
+@media (max-width: 576px) {
+  .brand-title {
+    font-size: 1.25rem; /* like fs-5 */
+  }
+}
+
+
 .big-deal {
     position: relative;
     margin-bottom: 30px;

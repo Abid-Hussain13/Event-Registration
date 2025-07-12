@@ -20,18 +20,24 @@
 
 /////////////////// Database Setup to Run of Railways.com ////////////////////////
 
+// db.js
+
 import mysql from "mysql2";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
   port: process.env.MYSQLPORT,
+  waitForConnections: true,
+  connectionLimit: 10,   // Maximum number of connections
+  queueLimit: 0          // Unlimited request queue
 });
 
-export default connection;
+export default pool;
+
 
