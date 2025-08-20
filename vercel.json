@@ -3,6 +3,9 @@
   "functions": {
     "index.js": {
       "runtime": "nodejs18.x"
+    },
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
     }
   },
   "routes": [
@@ -15,22 +18,12 @@
       "dest": "/public/$1"
     },
     {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.js"
-    }
-  ],
-  "builds": [
-    {
-      "src": "index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "public/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "views/**",
-      "use": "@vercel/static"
     }
   ]
 }
