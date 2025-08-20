@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import pool from './db.js';
 import session from 'express-session';
 import flash from 'connect-flash';
+import serverless from 'serverless-http';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,13 +21,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',  
+  store: new RedisStore({ client: redis }),
+  secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
-  cookie: { 
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 24 * 60 * 60 * 1000
   }
 }));
 app.use(flash());
@@ -230,4 +233,4 @@ app.post('/logout', (req, res) => {
   });
 });
 
-export default app;
+export const handler = serverless(app);
