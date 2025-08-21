@@ -209,7 +209,7 @@ app.post("/submitBooking", async (req, res) => {
       phone,
       eventDate,
       eventType,
-       numPersons === "" ? null : numPersons,,
+       numPersons === "" ? null : numPersons,
       decoration,
       message,
       userID,
