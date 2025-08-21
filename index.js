@@ -197,6 +197,7 @@ app.post("/submitBooking", async (req, res) => {
     }
 
     const userID = req.session.user?.id;
+    const finalPrice = price === "" ? null : price;
     const query = `
       INSERT INTO bookings 
       (name, email, phone, eventDate, eventType, numPersons, decoration, message, userID, price)
@@ -208,18 +209,18 @@ app.post("/submitBooking", async (req, res) => {
       phone,
       eventDate,
       eventType,
-      numPersons,
+       numPersons === "" ? null : numPersons,,
       decoration,
       message,
       userID,
-      price,
+      finalPrice,
     ]);
 
     console.log("Booking successful");
     res.redirect(303,"/events");
   } catch (err) {
-    console.error("Error inserting data into database:", err);
-    res.status(500).send("There was an error processing your booking.");
+    console.error("Error inserting data into database:", err.message, err.stack);
+  res.status(500).send("There was an error processing your booking.");
   }
 });
 
