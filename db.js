@@ -43,18 +43,20 @@
 
 /////////////////////////// database convert to postgres for neon /////////////////////////
 // db.js - Correct setup for Neon PostgreSQL
-import pg from 'pg';
-import dotenv from 'dotenv';
+// db.js
+import pkg from "pg";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const { Pool } = pg;
+const { Pool } = pkg;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false // Required for Neon
-  }
+    rejectUnauthorized: false, // Needed for Neon/Heroku
+  },
 });
 
 export default pool;
+
