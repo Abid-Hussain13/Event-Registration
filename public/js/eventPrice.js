@@ -49,3 +49,6 @@ const basePrices = {
   document.getElementById("eventType").addEventListener("change", calculatePrice);
   document.getElementById("numPersons").addEventListener("input", calculatePrice);
   document.getElementById("decoration").addEventListener("change", calculatePrice);
+
+
+  window.addEventListener("DOMContentLoaded", calculatePrice);
