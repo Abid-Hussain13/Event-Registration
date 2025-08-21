@@ -41,6 +41,11 @@ app.use(
   })
 );
 app.use(flash());
+app.use((req, _res, next) => {
+  console.log(req.method, req.originalUrl);
+  next();
+});
+
 
 // Authentication middleware
 function isAuthenticated(req, res, next) {
@@ -48,7 +53,7 @@ function isAuthenticated(req, res, next) {
     return next();
   }
   req.flash("error", "Please log in first!");
-  res.redirect("/login");
+  res.redirect(303,"/login");
 }
 
 // Routes
@@ -85,7 +90,7 @@ app.post("/signup/submit", async (req, res) => {
 
   if (!username || !email || !password) {
     req.flash("error", "All fields are required!");
-    return res.redirect("/signup");
+    return res.redirect(303,"/signup");
   }
 
   try {
@@ -94,7 +99,7 @@ app.post("/signup/submit", async (req, res) => {
 
     if (checkResult.rows.length > 0) {
       req.flash("error", "Email already registered!");
-      return res.redirect("/signup");
+      return res.redirect(303,"/signup");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -103,11 +108,11 @@ app.post("/signup/submit", async (req, res) => {
     await pool.query(query, [username, email, hashedPassword, "user"]);
 
     req.flash("success", "Signup successful! Welcome!");
-    res.redirect("/login");
+    res.redirect(303,"/login");
   } catch (err) {
     console.error("Signup error:", err);
     req.flash("error", "Database error, please try again!");
-    res.redirect("/signup");
+    res.redirect(303,"/signup");
   }
 });
 
@@ -117,7 +122,7 @@ app.post("/login/submit", async (req, res) => {
 
   if (!email || !password) {
     req.flash("error", "Please fill in all fields");
-    return res.redirect("/login");
+    return res.redirect(303,"/login");
   }
 
   try {
@@ -126,7 +131,7 @@ app.post("/login/submit", async (req, res) => {
 
     if (result.rows.length === 0) {
       req.flash("error", "Invalid email or password");
-      return res.redirect("/login");
+      return res.redirect(303,"/login");
     }
 
     const user = result.rows[0];
@@ -134,7 +139,7 @@ app.post("/login/submit", async (req, res) => {
 
     if (!isMatch) {
       req.flash("error", "Invalid email or password");
-      return res.redirect("/login");
+      return res.redirect(303,"/login");
     }
 
     req.session.user = {
@@ -144,11 +149,11 @@ app.post("/login/submit", async (req, res) => {
     };
 
     req.flash("success", "Login successful!");
-    return res.redirect("/");
+    req.session.save(() => res.redirect(303, "/"));
   } catch (err) {
     console.error("Login error:", err);
     req.flash("error", "Invalid email or password");
-    res.redirect("/login");
+    res.redirect(303,"/login");
   }
 });
 
@@ -188,7 +193,7 @@ app.post("/submitBooking", async (req, res) => {
       console.log("Event is Already booked on this day.");
       req.flash("bookingError", "Event is already booked on this day.");
       req.session.bookedData = req.body;
-      return res.redirect("/booking");
+      return res.redirect(303,"/booking");
     }
 
     const userID = req.session.user?.id;
@@ -211,7 +216,7 @@ app.post("/submitBooking", async (req, res) => {
     ]);
 
     console.log("Booking successful");
-    res.redirect("/events");
+    res.redirect(303,"/events");
   } catch (err) {
     console.error("Error inserting data into database:", err);
     res.status(500).send("There was an error processing your booking.");
@@ -256,7 +261,7 @@ app.post("/deleteEvent/:id", isAuthenticated, async (req, res) => {
     await pool.query(query, [eventId]);
 
     req.flash("success", "Event deleted successfully");
-    res.redirect("/events");
+    res.redirect(303,"/events");
   } catch (err) {
     console.error("Delete error:", err);
     req.flash("error", "Failed to delete event");
@@ -270,7 +275,7 @@ app.post("/logout", (req, res) => {
     if (err) {
       console.error("Error destroying session:", err);
     }
-    res.redirect("/");
+    res.redirect(303,"/");
   });
 });
 
