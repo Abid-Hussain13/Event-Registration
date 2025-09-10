@@ -29,6 +29,6 @@ This project allows users to register for events, manage participants, and view 
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/your-username/event-registration.git
+git clone https://github.com/Abid-Hussain13/Event-Registration.git
 cd event-registration
 ```
